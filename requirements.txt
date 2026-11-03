@@ -1,0 +1,11 @@
+minigrid
+stable-baselines3
+gymnasium
+numpy
+pandas
+matplotlib
+seaborn
+psutil
+torch
+jupyter
+pytest
