@@ -50,3 +50,29 @@ Run the tests:
 ```bash
 python -m pytest -q
 ```
+
+## Train and evaluate a DQN agent
+
+Run a short debug training session first:
+
+```bash
+python -m src.train \
+  --reward-condition baseline \
+  --seed 0 \
+  --timesteps 128 \
+  --output-dir results/models
+```
+
+Evaluate the saved model:
+
+```bash
+python -m src.evaluate \
+  --model-path results/models/dqn_baseline_seed_0.zip \
+  --reward-condition baseline \
+  --episodes 3 \
+  --output results/evaluation_baseline_seed_0.csv
+```
+
+For the planned experiments, replace `128` with `50000` and evaluate each
+model for `100` episodes. Valid reward conditions are `baseline`,
+`exploitable`, and `fixed_bonus`.
