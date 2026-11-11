@@ -118,3 +118,23 @@ These results show that DQN can learn the task, but the sparse reward and
 turn-based action space produce substantial sensitivity to the random seed.
 Both successful and unsuccessful runs are retained in
 `results/milestone_baseline_summary.csv`.
+
+Generate the milestone figure:
+
+```bash
+python -m src.plot_results
+```
+
+This creates `figures/milestone_baseline_results.png`, a two-panel figure
+showing mean evaluation reward and goal-completion rate for each baseline
+seed. Green bars indicate runs that learned the task; red bars indicate runs
+that did not reach the goal.
+
+Generate the milestone DOCX report:
+
+```bash
+python -m src.create_report
+```
+
+This creates `RL_RewardHacking_Milestone1_Report.docx` using the saved
+evaluation results, metadata, and figure.
