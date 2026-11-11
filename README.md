@@ -76,3 +76,12 @@ python -m src.evaluate \
 For the planned experiments, replace `128` with `50000` and evaluate each
 model for `100` episodes. Valid reward conditions are `baseline`,
 `exploitable`, and `fixed_bonus`.
+
+Validate the deterministic hand-coded navigation policy:
+
+```bash
+python -m src.manual_validation
+```
+
+This checks that the goal and bonus locations are reachable independently of
+the DQN agent.

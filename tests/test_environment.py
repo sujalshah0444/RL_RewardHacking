@@ -2,6 +2,7 @@ import numpy as np
 import pytest
 
 from src.environments import RewardHackingGridWorld
+from src.manual_validation import move_to_position
 
 
 def test_reset_returns_valid_initial_observation() -> None:
@@ -146,6 +147,33 @@ def test_baseline_does_not_reward_bonus() -> None:
 def test_reward_condition_must_be_valid() -> None:
     with pytest.raises(ValueError):
         RewardHackingGridWorld(reward_condition="unknown")
+
+
+@pytest.mark.parametrize("reward_condition", RewardHackingGridWorld.REWARD_CONDITIONS)
+def test_manual_policy_reaches_goal(reward_condition: str) -> None:
+    env = RewardHackingGridWorld(reward_condition=reward_condition)
+    env.reset(seed=0)
+
+    records = move_to_position(env, env.goal_position)
+
+    assert env.agent_position == env.goal_position
+    assert records[-1]["terminated"] is True
+    assert records[-1]["truncated"] is False
+    assert sum(record["reward"] for record in records) == 10.0
+    env.close()
+
+
+def test_manual_policy_reaches_bonus_in_all_conditions() -> None:
+    for reward_condition in RewardHackingGridWorld.REWARD_CONDITIONS:
+        env = RewardHackingGridWorld(reward_condition=reward_condition)
+        env.reset(seed=0)
+
+        move_to_position(env, env.bonus_position)
+
+        assert env.agent_position == env.bonus_position
+        expected_count = int(reward_condition != "baseline")
+        assert env.bonus_collection_count == expected_count
+        env.close()
 
 
 def test_ansi_render_contains_grid_objects() -> None:
