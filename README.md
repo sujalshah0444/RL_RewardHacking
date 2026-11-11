@@ -101,3 +101,20 @@ that the initial zero-completion result was primarily caused by insufficient
 training for the sparse-reward task. The 200,000-step setting should be used
 for the milestone baseline, subject to confirming it across an additional
 seed.
+
+### Milestone baseline runs
+
+The reportable baseline used 200,000 training steps and 100 deterministic
+evaluation episodes per seed:
+
+| Seed | Mean reward | Goal completion | Mean episode length | Outcome |
+|---:|---:|---:|---:|---|
+| 0 | 10.0 | 100% | 7 | Learned |
+| 1 | 10.0 | 100% | 7 | Learned |
+| 2 | 0.0 | 0% | 100 | Did not learn |
+| 3 | 0.0 | 0% | 100 | Did not learn |
+
+These results show that DQN can learn the task, but the sparse reward and
+turn-based action space produce substantial sensitivity to the random seed.
+Both successful and unsuccessful runs are retained in
+`results/milestone_baseline_summary.csv`.
