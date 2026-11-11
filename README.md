@@ -85,3 +85,19 @@ python -m src.manual_validation
 
 This checks that the goal and bonus locations are reachable independently of
 the DQN agent.
+
+## DQN baseline diagnostic
+
+The initial 50,000-step runs did not reliably learn the sparse-reward
+navigation task. A 200,000-step baseline diagnostic with seed `0` reached the
+goal in all 100 deterministic evaluation episodes:
+
+| Training steps | Seed | Mean reward | Goal completion | Mean episode length |
+|---:|---:|---:|---:|---:|
+| 200,000 | 0 | 10.0 | 100% | 7 |
+
+This indicates that the environment and reward function are learnable and
+that the initial zero-completion result was primarily caused by insufficient
+training for the sparse-reward task. The 200,000-step setting should be used
+for the milestone baseline, subject to confirming it across an additional
+seed.
